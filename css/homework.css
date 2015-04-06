@@ -1,0 +1,17 @@
+table { 
+	border:2px solid #0099ff;
+	border-collapse:collapse;
+	}
+td {
+
+	border-top:0px solid #0099ff;
+	border-bottom:0px solid #0099ff;
+	border-left:2px solid #0099ff;
+	border-right:2px solid #0099ff;
+	text-align:left;
+	vertical-align:bottom;
+	padding:0px 3px;
+	line-height:20px;
+	background-color: #ccffff;
+	color:red;
+}

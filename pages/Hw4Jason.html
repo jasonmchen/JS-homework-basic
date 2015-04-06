@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>4. 廣告輪播</title>
+		<script>
+			var color = new Array;
+			color[0] = "#7DF93D";
+			color[1] = "#FBA307";
+			color[2] = "#56AFFD";
+			color[3] = "#8C3FF9";
+			color[4] = "#F124EC";
+			color[5] = "#78E61A";
+			color[6] = "#82F4BE";
+			var idx = 0;
+			var autoplay = true;
+			window.onload = function() {
+				/* init text color */
+				for(i=0;i<7;i++){
+					document.getElementById("t"+i).style.color=color[i];
+				}
+				textHightlight(idx);
+			}
+			var intervalId = window.setInterval(forward, 2000);
+			function forward() {
+				console.log("forward");
+				/* play next image */
+				document.getElementById("p"+idx).style.display = "none";
+				textNormal(idx);
+				idx += 1;
+				idx %= 7; 
+				document.getElementById("p"+idx).style.display = "inline";
+				textHightlight(idx);
+			}
+			function forwardPressed(){
+				forward();
+				/* stop if autoplay */
+				if(autoplay) {
+					stopPlaying();
+				}
+			}
+			function backwardPressed() {
+				console.log("backwardPressed");
+				/* play next image */
+				document.getElementById("p"+idx).style.display = "none";
+				textNormal(idx);
+				idx -= 1;
+				if(idx < 0) idx = 6; 
+				document.getElementById("p"+idx).style.display = "inline";
+				textHightlight(idx);
+				/* stop if autoplay */
+				if(autoplay) {
+					stopPlaying();
+				}
+			}
+			function playstop() {
+				console.log("playstop");
+				if(autoplay) {
+					stopPlaying();
+				}
+				else {
+					startPlaying();
+				}
+			}
+			function stopPlaying() {
+				autoplay = false;
+				document.getElementById("idPlaystop").src="../img/playNormal_32.png";
+				window.clearInterval(intervalId);
+			}
+			function startPlaying() {
+				autoplay = true;
+				document.getElementById("idPlaystop").src="../img/stopPlay_32.png";
+				intervalId = window.setInterval(forward, 2000);
+			}
+			function textHightlight(id) {
+				document.getElementById("t"+id).style.backgroundColor ="#56AFFD";
+				document.getElementById("t"+id).style.color="white";
+			}
+			function textNormal(id) {
+				document.getElementById("t"+id).style.backgroundColor ="#F0FBEB";
+				document.getElementById("t"+id).style.color=color[id];
+			}
+		</script>
+		<style>
+			legend {
+				font-size: 18px;
+				font-weight: bold;
+				color:#519383;
+				text-shadow: 6px 6px 3px #83C380;
+			}
+			fieldset {
+				width: 525px;
+				padding-left:25px;
+				margin: 25px;
+				border: 6px solid #010101;
+				border-radius: 10px;
+				background-color:#F0FBEB;
+				box-shadow: 4px 4px 3px #010101;
+			}
+			.poster {
+				max-width:100%;
+				max-height:100%
+			}
+			span {
+				font-size:23px;
+				font:Verdana, Geneva, Arial, Helvetica, sans-serif;
+				font-weight: bold;
+				padding-left:5px;
+				padding-right:5px;
+			}
+			div {
+				text-align:center;
+			}
+			.container {
+				width:500px;
+				height:200px;
+				padding-bottom: 10px;
+			}
+			table {
+				padding-left: 150px;
+			}
+			td {
+				text-align:center;
+				vertical-align:center;
+				padding:2px 20px;
+		/*	border:2px solid #0099ff; */
+			}
+			.rainbow {
+				background-image: -webkit-gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+				background-image: gradient( linear, left top, right top, color-stop(0, #f22), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #2ff), color-stop(0.6, #2f2),color-stop(0.75, #2f2), color-stop(0.9, #ff2), color-stop(1, #f22) );
+				color: transparent;
+				-webkit-background-clip: text;
+				background-clip: text;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h4>4. 廣告輪播</h4>
+		<fieldset>
+			<legend align="center">
+				Ads Carounsel
+			</legend>
+			<div class="container">
+				<img id="p0" class+"poster" src="../posters/Mockingjay2.jpg">
+				<img id="p1" class+"poster" style="display:none" src="../posters/harrypotter3.jpg">
+				<img id="p2" class+"poster" style="display:none" src="../posters/bighero3.jpg">
+				<img id="p3" class+"poster" style="display:none" src="../posters/dayoffuturepast4.jpg">
+				<img id="p4" class+"poster" style="display:none" src="../posters/mazerunner1.jpg">
+				<img id="p5" class+"poster" style="display:none" src="../posters/transformers1.jpg">
+				<img id="p6" class+"poster" style="display:none" src="../posters/escapeplan1.jpg">
+				<!--img id="p7" class+"poster" style="display:none" src="../posters/Mockingjay1.jpg"-->
+				<!--img id="p8" class+"poster" style="display:none" src="../posters/mazerunner1.jpg"-->
+			</div>
+			<div>
+				<span id="t0">1</span>
+				<span id="t1">2</span>
+				<span id="t2">3</span>
+				<span id="t3">4</span>
+				<span id="t4">5</span>
+				<span id="t5">6</span>
+				<span id="t6">7</span>
+			</div>
+			<div>
+				<table>
+					<tr>
+						<td><img src="../img/rewind_32.png"/ onclick="backwardPressed();"></td>
+						<td><img id="idPlaystop" src="../img/stopPlay_32.png" onclick="playstop();"/></td>
+						<td><img src="../img/fastforward_32.png" onclick="forwardPressed();"/></td>
+					</tr>
+				</table>
+			</div>
+		</fieldset>
+	</body>
+</html>

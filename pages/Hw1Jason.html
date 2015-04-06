@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>index</title>
+		<meta name="author" content="Jason Chen" />
+		<script src="../js/debug.js"></script>
+		<script type="text/javascript">
+			function singleItem(x,y) {
+				var str = x + "*" + y + "=" + (x*y);
+				return str;
+			}
+		</script>
+		<link rel="stylesheet" href="../css/homework.css">
+	</head>
+	<body>
+		<script type="text/javascript">
+			out("<h4>1.	使用Table印出九九乘法表</h4>");
+			out("<table>");
+			for(j=1;j<10;j++) {
+				out("<tr>");
+				for(i=2;i<10;i++) {
+					out("<td>");
+					out(singleItem(i,j));
+					out("</td>");
+				}
+				out("</tr>");
+			}
+			out("</table>");
+		</script>
+	</body>
+</html>
+

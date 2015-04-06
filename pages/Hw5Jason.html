@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>製作2010~2020年日曆</title>
+		<script src="../js/debug.js"></script>
+		<script src="../js/general.js"></script>
+		<script>
+			/* set default date selection as today */
+			var now = new Date();
+			var yrs = parseInt(now.getFullYear()); //1-2020
+			var mon = parseInt(now.getMonth())+1; // 1-12
+			var day = parseInt(now.getDate()); // 1-31
+			log(yrs+"/"+(mon+1)+"/"+day);
+			
+			window.onload = function() {
+				initOptions(yrs,mon,day);
+			}
+			function initOptions(y, m, d) {
+				// year 2010 - 2022
+				var sYrs = document.getElementById("sYrs");
+				for(i=2010;i<=2020;i++) {
+					var eYr = document.createElement("option");
+					eYr.value=i;
+					eYr.innerHTML= i;
+					sYrs.appendChild(eYr);
+
+				}
+				sYrs.selectedIndex = y-2010;
+
+				// month 1-12
+				var sMon = document.getElementById("sMon");
+				for(i=1;i<=12;i++) {
+					var eMon = document.createElement("option");
+					eMon.value=i;
+					eMon.innerHTML= i;
+					sMon.appendChild(eMon);
+					//log(i);
+				}
+				sMon.selectedIndex = m-1;
+				
+				// day 1-31
+				var sDay = document.getElementById("sDay");
+				var days = numberOfDays(y,m);
+				for(i=1;i<=days;i++) {
+					var eDay = document.createElement("option");
+					eDay.value=i;
+					eDay.innerHTML= i;
+					sDay.appendChild(eDay);
+				}
+				sDay.selectedIndex = d-1;
+			}
+
+			function updateDayOption(y, m) {
+				// day 1-31
+				var sDay = document.getElementById("sDay");
+				var d2 = numberOfDays(y,m);
+				var d1 = sDay.length;
+				log("updateDayOption"+y+","+m+",new "+d2+",old "+d1);
+				
+				// number of new days is less than number of old days (remove extra days)
+				if(d2<d1) {
+					for(i=d2;i<d1;i++) {
+						log(i+".trying to remove "+sDay[d2].nodeName+", "+sDay[d2].value);
+						sDay[d2].parentNode.removeChild(sDay[d2]);
+					}
+				}
+				
+				// number of new days is more than number of old days (create extra days)
+				if(d2>d1) {
+					for(i=d1;i<d2;i++) {
+						log(i+".trying to add option.");
+						var eDay = document.createElement("option");
+						eDay.value=i+1;
+						eDay.innerHTML= i+1;
+						sDay.appendChild(eDay);
+					}
+				}
+			}
+			function yrsChanged(){
+				var sYrs = document.getElementById("sYrs");
+				yrs = sYrs.selectedIndex+2010;
+				log("changeYr"+":"+yrs+","+mon);
+				updateDayOption(yrs,mon);
+				
+			}
+			function monChanged() {
+				var sMon = document.getElementById("sMon");
+				mon = sMon.selectedIndex+1;
+				log("monChanged"+":"+yrs+","+mon);
+				updateDayOption(yrs,mon);
+			}
+			function dayChanged() {
+				log("dayChanged");
+			}
+		</script>
+	</head>
+	<body>
+		<h4>5. 製作2010~2020年日曆</h4>
+		<select id="sYrs" onchange="yrsChanged()">
+		</select>年
+		<select id="sMon" onchange="monChanged()">
+		</select>月
+		<select id="sDay" onchange="dayChanged()">
+		</select>日
+	</body>
+</html>

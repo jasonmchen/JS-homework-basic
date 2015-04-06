@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>評點製作</title>
+		<script>
+			window.onload = function() {
+				var imgs = document.getElementsByTagName("img");
+//				alert(imgs.length);
+				for ( i = 0; i < imgs.length; i++) {
+					document.getElementById(imgs[i].id).onmouseover = function() {
+						mouseOver(this.id);
+					};
+					document.getElementById(imgs[i].id).onmouseout = mouseOut;
+					document.getElementById(imgs[i].id).onclick = function() {
+						Click(this.id);
+					};
+				}
+			}//window.onload
+			function mouseOver(id) {
+				var n = parseInt(id.substring(1));
+//				alert(n);
+				for(i=0;i<=n;i++) {
+					document.getElementById("s"+i).src = "../img/starGreen.png";
+				}
+				document.getElementById("note").innerHTML = "請您評價:"+(n+1)+"顆星";
+			}
+
+			function mouseOut() {
+				for(i=0;i<5;i++) {
+					document.getElementById("s"+i).src = "../img/starBlack.png";
+				}
+				document.getElementById("note").innerHTML = "請您評價:5顆星";
+			}
+
+			function Click(id) {
+				var n = parseInt(id.substring(1));
+				for(i=0;i<=n;i++) {
+					document.getElementById("s"+i).src = "../img/starYellow.png";
+				}
+				document.getElementById("note").innerHTML = "<b>您的評價:"+(n+1)+"顆星</b>";
+				
+				// remove all mouseover and mouseout events
+				var imgs = document.getElementsByTagName("img");
+				for ( i = 0; i < imgs.length; i++) {
+					document.getElementById(imgs[i].id).onmouseover = null;
+					document.getElementById(imgs[i].id).onmouseout = null;
+					document.getElementById(imgs[i].id).onclick = null;
+				}
+			}
+		</script>
+		<style>
+			div {
+				border: 2px solid #0099ff;
+				width: 300px;
+				background-color: #ccffff;
+				padding: 10px 10px;
+			}
+			img {
+				cursor: pointer;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h4>3.評點製作</h4>
+		<div>
+			<img src="../img/starBlack.png" id="s0" class="star"/>
+			<img src="../img/starBlack.png" id="s1" class="star"/>
+			<img src="../img/starBlack.png" id="s2" class="star"/>
+			<img src="../img/starBlack.png" id="s3" class="star"/>
+			<img src="../img/starBlack.png" id="s4" class="star"/></br>
+			<p id="note">
+				請您評價:5顆星
+			</p>
+		</div>
+	</body>
+</html>

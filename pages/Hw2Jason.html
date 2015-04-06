@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-tw">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>index</title>
+		<meta name="author" content="Jason Chen" />
+		<script src="../js/debug.js"></script>
+		<script src="../js/general.js"></script>
+		<script src="../js/validation.js"></script>
+		<script type="text/javascript">
+		
+			window.onload = function() {
+				document.getElementById("name").addEventListener('change', validName);
+				document.getElementById("pwd").addEventListener('change', validPassword);
+				document.getElementById("date").addEventListener('change', validDate);
+			}
+			
+			function validName() {
+				var name = document.getElementById("name").value;
+				if (name.length < 2) {
+					alert(name +' <- 姓名沒有空白，至少兩個字');
+					displayImg("nameP", false);
+					return -1;
+				}
+				if(isChinese(name)){
+					displayImg("nameP", true);
+					return 0;
+				}
+				alert(name+' <- 姓名只允許中文字');
+				displayImg("nameP", false);
+				return -2;
+			}
+			function validPassword() {
+				var pwd = document.getElementById("pwd").value;
+				//alert(pwd.value);			
+				if (pwd.length < 6) {
+					alert(pwd +' <- 密碼沒有空白， 至少6個字');
+					displayImg("pwdP", false);
+					return -1;
+				}
+				if(isChinese(pwd)){
+					alert(pwd +' <- 密碼不允許中文字');
+					displayImg("pwdP", false);
+					return -2;
+				}
+				displayImg("pwdP", true);
+				return 0;
+			}
+			function validDate() {
+				var date = document.getElementById("date");
+				
+				var rtn = isDate(date.value);
+				
+				switch(rtn) {
+					case -1:
+					case -2:
+						alert(date.value+' <- 日期格式: 月/日/西元年, ex 2000/2/29');
+						displayImg("dateP", false);
+						break;
+					case 0:
+						displayImg("dateP", true);
+				}
+				return rtn;
+			}
+			function validAll() {
+				
+				if(validName()!=0)
+					return;
+				if(validPassword()!=0)
+					return;
+				if(validDate()!=0)
+					return;
+				alert('all inputs are valid!');
+				
+				location.reload();
+				return true;
+			}
+
+			function none() {
+				alert('reset does not have any action');
+			}
+			function displayImg(str, b) {
+				var e = document.getElementById(str);
+				//alert(e.src);
+				if(b) {
+					e.src = "../img/ball_GREEN.GIF";
+					e.style.visibility = 'visible';
+				} else {
+					e.src = "../img/Delete-normal.png";
+					e.style.visibility = 'visible';
+				}
+			}
+
+		</script>
+		<style>
+			legend {
+				font-size:18px;
+				font-weight:bold;
+			}
+			fieldset {
+				width:500px;
+				margin:15px;
+				border:2px solid grey;
+				border-radius:5px;				
+			}
+			.row {
+				width:450px;
+				margin:5px 18px;
+				padding-bottom:2px;
+			}
+			.title {
+				width:50px;
+				float:left;
+				text-align:right;
+				padding-right:20px;
+			}
+			.submit {
+				width:450px;
+				margin:5px 18px;
+				padding: 3px;
+			}
+		</style>
+
+	</head>
+	<body>
+		<javascript>
+			
+		</javascript>
+		<h4>2.	製作表單包含下列欄位</h4>
+		<form action="#" method="post">
+			<fieldset>
+				<legend>Form Check</legend>
+				<div class="row">
+					<label class="title">姓名:</label>
+					<input type="text" placeholder="請輸入姓名" id="name">
+					<img id="nameP" style="visibility:hidden" src="../img/ball_GREEN.GIF">
+				</div>
+				<div class="row">
+					<label class="title" style="visibility:hidden">hint</label>
+					(沒有空白，至少兩個字，只允許中文字)
+				</div>
+				<div class="row">
+					<label class="title">密碼:</label>
+					<input type="password" placeholder="請輸入密碼" id="pwd">
+					<img id="pwdP" style="visibility:hidden" src="../img/ball_GREEN.GIF">
+				</div>
+				<div class="row">
+					<label class="title" style="visibility:hidden">hint</label>
+					(沒有空白，不允許中文字, 至少6個字，包括英文字母，
+					<label class="title" style="visibility:hidden">hint</label>
+					數字，特殊字符[!@#$%^&*])
+				</div>
+				<div class="row">
+					<label class="title">日期:</label>
+					<input type="text" placeholder="ex.2000/2/29" id="date">
+					<img id="dateP" style="visibility:hidden" src="../img/ball_GREEN.GIF">
+				</div>
+				<div class="row">
+					<label class="title" style="visibility:hidden">hint</label>
+					(格式: 月/日/西元年 ex 2000/2/29)
+				</div>
+				
+				<div class="submit">
+					<label class="title" style="visibility:hidden">action</label>
+					<input type="reset" value="Reset" >
+					<input type="submit" value="Submit" onclick="validAll();">
+				</div>
+				
+			</fieldset>			
+		</form>
+	</body>
+</html>
+
